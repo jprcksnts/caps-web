@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserType extends Model
 {
+    public const ADMIN_TYPE_ID = 1;
+    public const STAFF_TYPE_ID = 2;
+
     /**
      * The attributes that are mass assignable.
      *
