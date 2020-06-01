@@ -27,15 +27,30 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}" id="product_management">
+                        <a class="nav-link" href="#navbar-products" data-toggle="collapse" role="button"
+                           aria-expanded="true" aria-controls="navbar-products">
                             <i class="fas fa-box-open"></i>
-                            <span class="nav-link-text">
-                                Product Management
-                            </span>
+                            <span class="nav-link-text">Product Management</span>
                         </a>
+                        <div class="collapse" id="navbar-products">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('products') }}" class="nav-link">
+                                        <span class="sidenav-mini-icon"> P </span>
+                                        <span class="sidenav-normal"> Products </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('product_types') }}" class="nav-link">
+                                        <span class="sidenav-mini-icon"> T </span>
+                                        <span class="sidenav-normal"> Product Types </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}" id="branch_management">
+                        <a class="nav-link" href="{{ route('branches') }}" id="branch_management">
                             <i class="fas fa-warehouse"></i>
                             <span class="nav-link-text">
                                 Branch Management
@@ -43,10 +58,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}" id="subscriptions">
-                            <i class="fas fa-users"></i>
+                        <a class="nav-link" href="{{ route('newsletter_subscriptions') }}" id="subscriptions">
+                            <i class="far fa-newspaper"></i>
                             <span class="nav-link-text">
-                                Subscriptions
+                                Newsletter Subscriptions
                             </span>
                         </a>
                     </li>
