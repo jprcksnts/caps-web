@@ -43,7 +43,7 @@ class ProductOrderController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create product order.';
+            $response['message'] = 'Failed to create product order.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -53,7 +53,7 @@ class ProductOrderController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create product order.';
+            $response['message'] = 'Failed to create product order.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -102,7 +102,7 @@ class ProductOrderController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product order.';
+            $response['message'] = 'Failed to update product order.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -112,7 +112,7 @@ class ProductOrderController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product order.';
+            $response['message'] = 'Failed to update product order.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -143,6 +143,7 @@ class ProductOrderController extends Controller
 
                 $response['error'] = $error;
                 $response['message'] = 'Failed to delete product order.';
+                $response['status_code'] = Response::HTTP_BAD_REQUEST;
             }
         } catch (QueryException $exception) {
             Log::error($exception->getMessage());
@@ -155,7 +156,7 @@ class ProductOrderController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete product order.';
+            $response['message'] = 'Failed to delete product order.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -165,7 +166,7 @@ class ProductOrderController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete product order.';
+            $response['message'] = 'Failed to delete product order.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 

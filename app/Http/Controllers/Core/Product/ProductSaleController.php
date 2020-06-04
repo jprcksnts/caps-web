@@ -43,7 +43,7 @@ class ProductSaleController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create product sale.';
+            $response['message'] = 'Failed to create product sale.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -53,7 +53,7 @@ class ProductSaleController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create product sale.';
+            $response['message'] = 'Failed to create product sale.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -104,7 +104,7 @@ class ProductSaleController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product sale.';
+            $response['message'] = 'Failed to update product sale.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -114,7 +114,7 @@ class ProductSaleController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product sale.';
+            $response['message'] = 'Failed to update product sale.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -158,7 +158,7 @@ class ProductSaleController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete product sale.';
+            $response['message'] = 'Failed to delete product sale.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -168,7 +168,7 @@ class ProductSaleController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete product sale.';
+            $response['message'] = 'Failed to delete product sale.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 

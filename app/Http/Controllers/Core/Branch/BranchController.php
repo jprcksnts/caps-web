@@ -44,13 +44,14 @@ class BranchController extends Controller
                 $error['message'] = 'Branch already exists.';
 
                 $response['error'] = $error;
-                $response['message'] = ' Failed to create branch.';
+                $response['message'] = 'Failed to create branch.';
+                $response['status_code'] = Response::HTTP_BAD_REQUEST;
             } else {
                 $error = array();
                 $error['message'] = 'Query exception occurred.';
 
                 $response['error'] = $error;
-                $response['message'] = ' Failed to create branch.';
+                $response['message'] = 'Failed to create branch.';
                 $response['status_code'] = Response::HTTP_BAD_REQUEST;
             }
         } catch (\Exception $exception) {
@@ -61,7 +62,7 @@ class BranchController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create branch.';
+            $response['message'] = 'Failed to create branch.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -113,13 +114,14 @@ class BranchController extends Controller
                 $error['message'] = 'Branch already exists.';
 
                 $response['error'] = $error;
-                $response['message'] = ' Failed to update branch.';
+                $response['message'] = 'Failed to update branch.';
+                $response['status_code'] = Response::HTTP_BAD_REQUEST;
             } else {
                 $error = array();
                 $error['message'] = 'Query exception occurred.';
 
                 $response['error'] = $error;
-                $response['message'] = ' Failed to update branch.';
+                $response['message'] = 'Failed to update branch.';
                 $response['status_code'] = Response::HTTP_BAD_REQUEST;
             }
         } catch (\Exception $exception) {
@@ -130,7 +132,7 @@ class BranchController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update branch.';
+            $response['message'] = 'Failed to update branch.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -174,7 +176,7 @@ class BranchController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete branch.';
+            $response['message'] = 'Failed to delete branch.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -184,7 +186,7 @@ class BranchController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete branch.';
+            $response['message'] = 'Failed to delete branch.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 

@@ -42,13 +42,14 @@ class ProductTypeController extends Controller
                 $error['message'] = 'Product type already exists.';
 
                 $response['error'] = $error;
-                $response['message'] = ' Failed to create product type.';
+                $response['message'] = 'Failed to create product type.';
+                $response['status_code'] = Response::HTTP_BAD_REQUEST;
             } else {
                 $error = array();
                 $error['message'] = 'Query exception occurred.';
 
                 $response['error'] = $error;
-                $response['message'] = ' Failed to create product type.';
+                $response['message'] = 'Failed to create product type.';
                 $response['status_code'] = Response::HTTP_BAD_REQUEST;
             }
         } catch (\Exception $exception) {
@@ -59,7 +60,7 @@ class ProductTypeController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create product type.';
+            $response['message'] = 'Failed to create product type.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -108,7 +109,7 @@ class ProductTypeController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product type.';
+            $response['message'] = 'Failed to update product type.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -118,7 +119,7 @@ class ProductTypeController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product type.';
+            $response['message'] = 'Failed to update product type.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -163,7 +164,7 @@ class ProductTypeController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product type.';
+            $response['message'] = 'Failed to update product type.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -173,7 +174,7 @@ class ProductTypeController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update product type.';
+            $response['message'] = 'Failed to update product type.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 

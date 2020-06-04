@@ -42,7 +42,7 @@ class NewsletterSubscriptionController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create newsletter subscription.';
+            $response['message'] = 'Failed to create newsletter subscription.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -52,7 +52,7 @@ class NewsletterSubscriptionController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to create newsletter subscription.';
+            $response['message'] = 'Failed to create newsletter subscription.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -81,6 +81,7 @@ class NewsletterSubscriptionController extends Controller
 
                 $response['data'] = $data;
                 $response['message'] = 'Newsletter subscription successfully updated.';
+                $response['status_code'] = Response::HTTP_OK;
             } else {
                 // if newsletter subscription does not exist
                 $error = array();
@@ -101,7 +102,7 @@ class NewsletterSubscriptionController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update newsletter subscription.';
+            $response['message'] = 'Failed to update newsletter subscription.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -111,7 +112,7 @@ class NewsletterSubscriptionController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to update newsletter subscription.';
+            $response['message'] = 'Failed to update newsletter subscription.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
@@ -155,7 +156,7 @@ class NewsletterSubscriptionController extends Controller
             $error['message'] = 'Query exception occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete newsletter subscription.';
+            $response['message'] = 'Failed to delete newsletter subscription.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
@@ -165,7 +166,7 @@ class NewsletterSubscriptionController extends Controller
             $error['message'] = 'Unknown error occurred.';
 
             $response['error'] = $error;
-            $response['message'] = ' Failed to delete newsletter subscription.';
+            $response['message'] = 'Failed to delete newsletter subscription.';
             $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
