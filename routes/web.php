@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'LandingPageController@index')->name('welcome');
+Route::post('/subscribe', 'LandingPageController@subscribe')->name('subscribe');
 
 Auth::routes(['register' => false]);
 
