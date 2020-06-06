@@ -35,13 +35,13 @@
                         <div class="collapse" id="navbar-products">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="{{ route('products') }}" class="nav-link">
+                                    <a href="{{ route('products.index') }}" class="nav-link">
                                         <span class="sidenav-mini-icon"> P </span>
                                         <span class="sidenav-normal"> Products </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('product_types') }}" class="nav-link">
+                                    <a href="{{ route('product_types.index') }}" class="nav-link">
                                         <span class="sidenav-mini-icon"> T </span>
                                         <span class="sidenav-normal"> Product Types </span>
                                     </a>
@@ -50,7 +50,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('branches') }}" id="branch_management">
+                        <a class="nav-link" href="{{ route('branches.index') }}" id="branch_management">
                             <i class="fas fa-warehouse"></i>
                             <span class="nav-link-text">
                                 Branch Management
@@ -58,7 +58,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('newsletter_subscriptions') }}" id="subscriptions">
+                        <a class="nav-link" href="{{ route('newsletter_subscriptions.index') }}" id="subscriptions">
                             <i class="far fa-newspaper"></i>
                             <span class="nav-link-text">
                                 Newsletter Subscriptions
@@ -66,7 +66,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}" id="reports">
+                        <a class="nav-link" href="{{ route('reports') }}" id="reports">
                             <i class="fas fa-chart-area"></i>
                             <span class="nav-link-text">
                                 Reports

@@ -33,10 +33,8 @@
         </div>
 
         <div class="container-fluid mt--6">
-            <div class="row">
-                <div class="col">
-                    @yield('content')
-                </div>
+            <div class="row justify-content-center">
+                @yield('content')
             </div>
         </div>
     </div>
