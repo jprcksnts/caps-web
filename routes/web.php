@@ -24,6 +24,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('dashboard', 'DashboardController')->name('dashboard');
 
     Route::resource('products', 'ProductsController')->except(['update', 'destroy']);
+    Route::post('products/{product}/update', 'ProductsController@update')->name('products.update');
     Route::get('retrieve_list/products', 'ProductsController@retrieveList');
 
     Route::resource('product_types', 'ProductTypesController')->except(['update', 'destroy']);
