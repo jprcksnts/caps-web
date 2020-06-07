@@ -31,6 +31,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('retrieve_list/product_types', 'ProductTypesController@retrieveList');
 
     Route::resource('branches', 'BranchesController')->except(['update', 'destroy']);
+    Route::post('branches/{branch}/update', 'BranchesController@update')->name('branches.update');
     Route::get('retrieve_list/branches', 'BranchesController@retrieveList');
 
     Route::resource('newsletter_subscriptions', 'NewsletterSubscriptionsController')->except(['update', 'destroy']);
