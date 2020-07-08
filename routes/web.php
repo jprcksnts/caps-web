@@ -22,6 +22,14 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('dashboard', 'DashboardController')->name('dashboard');
 
+    Route::resource('product_sales', 'ProductSalesController')->except(['update', 'destroy']);
+    Route::post('product_sales/{product_sale}/update', 'ProductSalesController@update')->name('product_sales.update');
+    Route::get('retrieve_list/product_sales', 'ProductSalesController@retrieveList');
+
+    Route::resource('product_orders', 'ProductOrdersController')->except(['update', 'destroy']);
+    Route::post('product_orders/{product_order}/update', 'ProductOrdersController@update')->name('product_orders.update');
+    Route::get('retrieve_list/product_orders', 'ProductOrdersController@retrieveList');
+
     Route::resource('products', 'ProductsController')->except(['update', 'destroy']);
     Route::post('products/{product}/update', 'ProductsController@update')->name('products.update');
     Route::get('retrieve_list/products', 'ProductsController@retrieveList');
@@ -36,6 +44,8 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::resource('newsletter_subscriptions', 'NewsletterSubscriptionsController')->except(['update', 'destroy']);
     Route::get('retrieve_list/newsletter_subscriptions', 'NewsletterSubscriptionsController@retrieveList');
+
+    Route::post('mail/newsletter_subscriptions', 'NewsletterSubscriptionsController@mail')->name('newsletter_subscriptions.mail');
 
     Route::get('reports', 'ReportsController@index')->name('reports');
 

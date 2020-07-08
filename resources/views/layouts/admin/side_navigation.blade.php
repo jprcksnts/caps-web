@@ -27,6 +27,29 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#navbar-transactions" data-toggle="collapse" role="button"
+                           aria-expanded="true" aria-controls="navbar-products">
+                            <i class="fas fa-dolly-flatbed"></i>
+                            <span class="nav-link-text">Transactions</span>
+                        </a>
+                        <div class="collapse" id="navbar-transactions">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('product_sales.index') }}" class="nav-link">
+                                        <span class="sidenav-mini-icon"> S </span>
+                                        <span class="sidenav-normal"> Product Sales </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('product_orders.index') }}" class="nav-link">
+                                        <span class="sidenav-mini-icon"> O </span>
+                                        <span class="sidenav-normal"> Product Orders </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#navbar-products" data-toggle="collapse" role="button"
                            aria-expanded="true" aria-controls="navbar-products">
                             <i class="fas fa-box-open"></i>
