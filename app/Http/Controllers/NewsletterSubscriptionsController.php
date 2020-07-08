@@ -14,6 +14,11 @@ class NewsletterSubscriptionsController extends Controller
         return view('newsletter_subscriptions.index', compact('table_headers'));
     }
 
+    public function mail()
+    {
+
+    }
+
     public function retrieveList()
     {
         $newsletter_subscriptions = NewsletterSubscription::query();
