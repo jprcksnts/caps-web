@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->foreignId('product_type_id')->references('id')->on('product_types');
             $table->string('name', 128);
+            $table->string('uuid')->unique();
             $table->string('code', 32)->unique();
             $table->unsignedInteger('quantity')->default(0);
             $table->timestamps();

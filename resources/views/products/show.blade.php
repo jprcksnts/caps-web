@@ -35,6 +35,10 @@
                             <h3 class="mb-0 font-weight-900">Product Detail</h3>
                         </div>
                         <div class="card-body">
+                            <div class="pb-4">
+                                <p class="small font-weight-bold"> GENERATED QR CODE </p>
+                                <img src="{{ asset('generated_code/' . $product->uuid . '.svg') }}" class="img-fluid">
+                            </div>
                             <div class="row">
                                 {{-- ID --}}
                                 <div class="col-sm-3">

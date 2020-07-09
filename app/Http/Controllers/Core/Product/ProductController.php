@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Core\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product\Product;
+use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -21,9 +23,14 @@ class ProductController extends Controller
             $product = new Product();
             $product->product_type_id = $product_type_id;
             $product->name = $name;
+            $product->uuid = (string) Str::uuid();
             $product->code = $code;
             $product->quantity = $quantity;
             $product->save();
+
+            $file_name = $product->uuid . '.svg';
+            $image = \QrCode::format('svg')
+                ->size(100)->generate($product->uuid, public_path() . '\generated_code\\' . $file_name);
 
             DB::commit();
 
@@ -46,7 +53,7 @@ class ProductController extends Controller
             $response['error'] = $error;
             $response['message'] = 'Failed to create product.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
             Log::error($exception->getTraceAsString());
 
@@ -108,7 +115,7 @@ class ProductController extends Controller
             $response['error'] = $error;
             $response['message'] = 'Failed to update product.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
             Log::error($exception->getTraceAsString());
 
@@ -162,7 +169,7 @@ class ProductController extends Controller
             $response['error'] = $error;
             $response['message'] = 'Failed to delete product.';
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
             Log::error($exception->getTraceAsString());
 
