@@ -29,6 +29,7 @@
         <div class="row">
             <div class="col">
                 <div class="card-wrapper">
+                    @include('shared.flash_messages')
                     <div class="card">
                         <div class="card-header">
                             <h3 class="mb-0 font-weight-900">Product - Data List</h3>
