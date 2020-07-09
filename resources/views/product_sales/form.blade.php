@@ -25,6 +25,7 @@
 @stop
 
 @section('content')
+    @include('shared.modal_scan_code')
     <div class="col-md-6">
         <div class="row">
             <div class="col">
@@ -36,6 +37,46 @@
                         <div class="card-body">
                             <form method="post" action="{{ $form_action['route'] }}" role="form" id="form-data">
                                 @csrf
+
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label" for="branch_id">Branch</label>
+                                    <select class="form-control" id="branch_id" name="branch_id">
+                                        @foreach ($branches as $branch)
+                                            <option value="{{ $branch->id }}" id="{{ $branch->id }}"
+                                                    @if (isset($product_sale)) @if ($product_sale->branch_id == $branch->id)
+                                                    selected @endif @endif>
+                                                {{ $branch->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label" for="product_id">Product</label>
+                                    <select class="form-control" id="product_id" name="product_id">
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->id }}" id="{{ $product->id }}"
+                                                    @if (isset($product_sale)) @if ($product_sale->product_id == $product->id)
+                                                    selected @endif @endif>
+                                                {{ $product->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-4 small">
+                                    Select Product via generated code?<a href="#" data-toggle="modal"
+                                                                         data-target="#modalScanCode">
+                                        <span class="ml-2 text-body-2-custom">Scan QR Code.</span>
+                                    </a>
+                                </div>
+
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label" for="quantity">
+                                        Quantity
+                                    </label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity"
+                                           value="{{ $product_sale->quantity ?? old('quantity') }}">
+                                </div>
 
                                 <button class="btn btn-primary btn-block mt-4 w-25" type="submit">Submit</button>
                             </form>

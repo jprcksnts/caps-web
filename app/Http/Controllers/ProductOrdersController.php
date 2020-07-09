@@ -51,7 +51,7 @@ class ProductOrdersController extends Controller
         $product_order->expected_arrival_date = date('m/d/Y', strtotime($product_order->expected_arrival_date));
         $products = Product::all();
         $form_action = [
-            'page_title' => 'Update Product ID #' . $product_order->id,
+            'page_title' => 'Update Product Order ID #' . $product_order->id,
             'route' => route('product_orders.update', ['product_order' => $product_order->id]),
         ];
 
