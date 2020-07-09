@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Core\Product\ProductOrderController;
 use App\Models\Product\Product;
+use App\Models\Product\ProductOrder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -23,6 +26,48 @@ class ProductOrdersController extends Controller
             'route' => route('product_orders.store'),
         ];
         return view('product_orders.form', compact('form_action', 'products'));
+    }
+
+    public function store(Request $request)
+    {
+        $input = $request->all();
+        $expected_arrival_date = date('Y-m-d', strtotime(str_replace('-', '/', $input['expected_arrival_date'])));
+        $response = ProductOrderController::create($input['product_id'], $input['quantity'], $expected_arrival_date);
+        $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
+
+        /* TODO :: Update quantity of product */
+
+        return redirect(route('product_orders.index'))
+            ->with($status, $response['message']);
+    }
+
+    public function show(ProductOrder $product_order)
+    {
+        return view('product_orders.show', compact('product_order'));
+    }
+
+    public function edit(ProductOrder $product_order)
+    {
+        $product_order->expected_arrival_date = date('m/d/Y', strtotime($product_order->expected_arrival_date));
+        $products = Product::all();
+        $form_action = [
+            'page_title' => 'Update Product ID #' . $product_order->id,
+            'route' => route('product_orders.update', ['product_order' => $product_order->id]),
+        ];
+
+        return view('product_orders.form', compact('form_action', 'product_order', 'products'));
+    }
+
+    public function update(Request $request, ProductOrder $product_order)
+    {
+        $input = $request->all();
+        $expected_arrival_date = date('Y-m-d', strtotime(str_replace('-', '/', $input['expected_arrival_date'])));
+
+        $response = ProductOrderController::update($product_order->id, $input['product_id'], $input['quantity'], $expected_arrival_date);
+        $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
+
+        return redirect(route('product_orders.show', ['product_order' => $product_order->id]))
+            ->with($status, $response['message']);
     }
 
     public function retrieveList()
