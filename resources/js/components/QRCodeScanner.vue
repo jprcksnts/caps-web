@@ -54,7 +54,10 @@
 
                         $('#product_id').val(data['product']['id']);
                     } else {
+                        $('#scanned_product_id').text('N/A');
                         $('#scanned_product_uuid').text('N/A');
+                        $('#scanned_product_code').text('N/A');
+                        $('#scanned_product_name').text('N/A');
                     }
                 });
             }
