@@ -37,7 +37,7 @@
                         <div class="card-body">
                             <div class="pb-4">
                                 <p class="small font-weight-bold"> GENERATED QR CODE </p>
-                                <img src="{{ asset('generated_code/' . $product->uuid . '.svg') }}" class="img-fluid">
+                                <img src="{{ asset('generated_code/' . $product->uuid . '.svg') }}" class="img-fluid" style="max-height: 160px;">
                             </div>
                             <div class="row">
                                 {{-- ID --}}

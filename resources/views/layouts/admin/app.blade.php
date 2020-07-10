@@ -26,7 +26,7 @@
     <body class="g-sidenav-pinned">
     @include('layouts.admin.side_navigation')
 
-    <div class="main-content" id="panel">
+    <div id="app" class="main-content" id="panel">
         <div class="bg-indigo">
             @include('layouts.admin.top_navigation')
             @include('layouts.admin.header')

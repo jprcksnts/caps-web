@@ -55,10 +55,8 @@
                                     <label class="form-control-label" for="product_id">Product</label>
                                     <select class="form-control" id="product_id" name="product_id">
                                         @foreach ($products as $product)
-                                            <option value="{{ $product->id }}" id="{{ $product->id }}"
-                                                    @if (isset($product_sale)) @if ($product_sale->product_id == $product->id)
-                                                    selected @endif @endif>
-                                                {{ $product->name }}
+                                            <option value="{{ $product->id }}" id="{{ $product->id }}">
+                                                {{ $product->name }} (ID #{{ $product->id }})
                                             </option>
                                         @endforeach
                                     </select>
@@ -87,3 +85,8 @@
         </div>
     </div>
 @stop
+
+@section('scripts')
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+@endsection

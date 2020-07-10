@@ -13,6 +13,56 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    public static function getProductByUUID($uuid)
+    {
+        $response = array();
+
+        try {
+            $product = Product::where('uuid', $uuid)->first();
+
+            if ($product != null) {
+                $data = array();
+                $data['product'] = $product;
+
+                $response['data'] = $data;
+                $response['message'] = 'Product found.';
+                $response['status_code'] = Response::HTTP_OK;
+            } else {
+                $error = array();
+                $error['message'] = 'Invalid product UUID.';
+
+                $response['error'] = $error;
+                $response['message'] = 'Product not found.';
+                $response['error'] = Response::HTTP_BAD_REQUEST;
+            }
+        } catch (QueryException $exception) {
+            Log::error($exception->getMessage());
+            Log::error($exception->getTraceAsString());
+
+            $error_code = $exception->errorInfo[1];
+            Log::error($error_code);
+
+            $error = array();
+            $error['message'] = 'Query exception occurred.';
+
+            $response['error'] = $error;
+            $response['message'] = 'Failed to find product.';
+            $response['status_code'] = Response::HTTP_BAD_REQUEST;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            Log::error($exception->getTraceAsString());
+
+            $error = array();
+            $error['message'] = 'Unknown error occurred.';
+
+            $response['error'] = $error;
+            $response['message'] = 'Failed to find product.';
+            $response['status_code'] = Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        return $response;
+    }
+
     public static function create($product_type_id, $name, $code, $quantity)
     {
         $response = array();
@@ -23,14 +73,14 @@ class ProductController extends Controller
             $product = new Product();
             $product->product_type_id = $product_type_id;
             $product->name = $name;
-            $product->uuid = (string) Str::uuid();
+            $product->uuid = (string)Str::uuid();
             $product->code = $code;
             $product->quantity = $quantity;
             $product->save();
 
             $file_name = $product->uuid . '.svg';
             $image = \QrCode::format('svg')
-                ->size(100)->generate($product->uuid, public_path() . '\generated_code\\' . $file_name);
+                ->size(512)->generate($product->uuid, public_path() . '/generated_code/' . $file_name);
 
             DB::commit();
 
