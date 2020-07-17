@@ -1,7 +1,7 @@
 <div class="modal fade" id="modalScanCode" tabindex="-1" role="dialog"
      aria-labelledby="modalScanCodeLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px !important;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body my-0">
                 <div class="">

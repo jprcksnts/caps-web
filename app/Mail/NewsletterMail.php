@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -11,14 +10,17 @@ class NewsletterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $data;
+
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param $subject
+     * @param $content
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -28,6 +30,8 @@ class NewsletterMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.newsletter');
+        return $this->subject($this->data['subject'])
+            ->markdown('emails.newsletter')
+            ->with('data', $this->data);
     }
 }

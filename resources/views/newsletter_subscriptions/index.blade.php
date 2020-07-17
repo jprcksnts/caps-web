@@ -17,7 +17,7 @@
 @stop
 
 @section('header_right')
-    <a href="{{ route('product_types.create') }}" class="btn btn-md btn-neutral text-dark">
+    <a href="{{ route('newsletter_subscriptions.compose') }}" class="btn btn-md btn-neutral text-dark">
         <span class="btn-inner--icon mr-2"><i class="fas fa-envelope-square"></i></span>
         Send New Mail
     </a>
