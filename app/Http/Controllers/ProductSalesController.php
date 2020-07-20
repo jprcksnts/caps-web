@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Core\Inventory\InventoryController;
+use App\Http\Controllers\Core\inventory\InventoryMovementController;
 use App\Http\Controllers\Core\Product\ProductSaleController;
 use App\Models\Branch\Branch;
+use App\Models\Inventory\Inventory;
+use App\Models\Inventory\InventoryMovement;
 use App\Models\Product\Product;
 use App\Models\Product\ProductSale;
 use Illuminate\Http\Request;
@@ -15,7 +19,7 @@ class ProductSalesController extends Controller
 {
     public function index()
     {
-        $table_headers = ['id', 'product', 'branch', 'quantity', ''];
+        $table_headers = ['id', 'product', 'branch', 'quantity', 'transaction date', ''];
         return view('product_sales.index', compact('table_headers'));
     }
 
@@ -36,7 +40,14 @@ class ProductSalesController extends Controller
         $response = ProductSaleController::create($input['product_id'], $input['branch_id'], $input['quantity']);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
-        /* TODO :: Update quantity of product */
+        /* Inventory Movement */
+        /* Declaring initial quantity on default main branch */
+        $inventory = Inventory::where('branch_id', $input['branch_id'])
+            ->where('product_id', $input['product_id'])->first();
+        $updated_quantity = $inventory->quantity - $request['quantity'];
+
+        InventoryController::update($inventory->id, $updated_quantity);
+        InventoryMovementController::create($response['data']['product_sale']['id'], InventoryMovement::$sale, $request['quantity'], $updated_quantity);
 
         return redirect(route('product_sales.index'))
             ->with($status, $response['message']);
@@ -75,7 +86,8 @@ class ProductSalesController extends Controller
             ->select('product_sales.id',
                 'products.name as product_name',
                 'branches.name as branch_name',
-                'product_sales.quantity')
+                'product_sales.quantity',
+                'product_sales.created_at')
             ->leftJoin('products', 'product_sales.product_id', '=', 'products.id')
             ->leftJoin('branches', 'product_sales.branch_id', '=', 'branches.id');
 
