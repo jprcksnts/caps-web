@@ -14,7 +14,7 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $table_headers = ['id', 'name', 'product type', 'code', 'quantity', ''];
+        $table_headers = ['id', 'name', 'product type', 'code', ''];
         return view('products.index', compact('table_headers'));
     }
 
@@ -31,7 +31,7 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $response = ProductController::create($input['product_type_id'], $input['name'], $input['code'], $input['quantity']);
+        $response = ProductController::create($input['product_type_id'], $input['name'], $input['code']);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         return redirect(route('products.index'))
@@ -52,7 +52,7 @@ class ProductsController extends Controller
     public function update(Request $request, Product $product)
     {
         $input = $request->all();
-        $response = ProductController::update($product->id, $input['product_type_id'], $input['name'], $input['code'], $input['quantity']);
+        $response = ProductController::update($product->id, $input['product_type_id'], $input['name'], $input['code']);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         return redirect(route('products.show', ['product' => $product->id]))
@@ -70,8 +70,7 @@ class ProductsController extends Controller
             ->select('products.id',
                 'products.name',
                 'products.code',
-                'product_types.type',
-                'products.quantity')
+                'product_types.type')
             ->leftJoin('product_types', 'products.product_type_id', '=', 'product_types.id');
 
         return DataTables::query($products)

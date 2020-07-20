@@ -63,7 +63,7 @@ class ProductController extends Controller
         return $response;
     }
 
-    public static function create($product_type_id, $name, $code, $quantity)
+    public static function create($product_type_id, $name, $code)
     {
         $response = array();
 
@@ -75,7 +75,6 @@ class ProductController extends Controller
             $product->name = $name;
             $product->uuid = (string)Str::uuid();
             $product->code = $code;
-            $product->quantity = $quantity;
             $product->save();
 
             $file_name = $product->uuid . '.svg';
@@ -118,7 +117,7 @@ class ProductController extends Controller
         return $response;
     }
 
-    public static function update($product_id, $product_type_id, $name, $code, $quantity)
+    public static function update($product_id, $product_type_id, $name, $code)
     {
         $response = array();
 
@@ -132,7 +131,6 @@ class ProductController extends Controller
                 $product->product_type_id = $product_type_id;
                 $product->name = $name;
                 $product->code = $code;
-                $product->quantity = $quantity;
                 $product->save();
 
                 DB::commit();

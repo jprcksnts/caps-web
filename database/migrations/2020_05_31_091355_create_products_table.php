@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('name', 128);
             $table->string('uuid')->unique();
             $table->string('code', 32)->unique();
-            $table->unsignedInteger('quantity')->default(0);
             $table->timestamps();
         });
     }

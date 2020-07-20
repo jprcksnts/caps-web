@@ -94,7 +94,6 @@
                         {data: 'name', name: 'name'},
                         {data: 'type', name: 'product_types.type'},
                         {data: 'code', name: 'code'},
-                        {data: 'quantity', name: 'quantity', searchable: false},
                         {data: 'action_column', name: 'action_column', orderable: false, searchable: false},
                     ],
                 }

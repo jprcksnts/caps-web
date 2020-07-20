@@ -67,7 +67,7 @@
 
                                 <div class="form-group mb-2">
                                     <label class="form-control-label" for="quantity">
-                                        Quantity
+                                        Initial Quantity
                                     </label>
                                     <input type="number" class="form-control" id="quantity" name="quantity"
                                            value="{{ $product->quantity ?? old('quantity') }}">
