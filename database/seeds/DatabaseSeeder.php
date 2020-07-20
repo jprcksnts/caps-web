@@ -14,5 +14,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTypeSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(BranchSeeder::class);
+
+        if (config('app.env') != 'production') {
+            $this->call(ProductTypeSeeder::class);
+        }
     }
 }
