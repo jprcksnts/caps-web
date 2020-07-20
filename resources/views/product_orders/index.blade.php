@@ -89,11 +89,13 @@
                         "type": "GET",
                         "data": {_token: "{{ csrf_token() }}"}
                     },
+                    order: ['4', 'desc'],
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'product_name', name: 'products.name'},
                         {data: 'quantity', name: 'quantity', searchable: false},
                         {data: 'expected_arrival_date', name: 'expected_arrival_date'},
+                        {data: 'created_at', name: 'created_at'},
                         {data: 'action_column', name: 'action_column', orderable: false, searchable: false},
                     ],
                 }

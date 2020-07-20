@@ -38,7 +38,7 @@
                             <div class="pb-4">
                                 <p class="small font-weight-bold"> PRODUCT QR CODE </p>
                                 <img src="{{ asset('generated_code/' . $product_order->product->uuid . '.svg') }}"
-                                     class="img-fluid">
+                                     class="img-fluid" style="max-height: 160px;">
                             </div>
                             <div class="row">
                                 {{-- ID --}}
@@ -47,6 +47,13 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="font-weight-normal">{{ $product_order->id }}</p>
+                                </div>
+                                {{-- Branch Name --}}
+                                <div class="col-sm-3">
+                                    <small class="text-uppercase text-muted font-weight-bold">Branch Name</small>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="font-weight-normal">{{ $product_order->branch->name }}</p>
                                 </div>
                                 {{-- Product Name --}}
                                 <div class="col-sm-3">

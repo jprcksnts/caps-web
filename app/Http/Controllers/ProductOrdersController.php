@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Core\Inventory\InventoryController;
+use App\Http\Controllers\Core\inventory\InventoryMovementController;
 use App\Http\Controllers\Core\Product\ProductOrderController;
 use App\Models\Branch\Branch;
+use App\Models\Inventory\Inventory;
+use App\Models\Inventory\InventoryMovement;
 use App\Models\Product\Product;
 use App\Models\Product\ProductOrder;
 use Illuminate\Http\Request;
@@ -15,7 +19,7 @@ class ProductOrdersController extends Controller
 {
     public function index()
     {
-        $table_headers = ['id', 'product', 'quantity', 'expected arrival date', ''];
+        $table_headers = ['id', 'product', 'quantity', 'expected arrival date', 'transaction date', ''];
         return view('product_orders.index', compact('table_headers'));
     }
 
@@ -37,7 +41,14 @@ class ProductOrdersController extends Controller
         $response = ProductOrderController::create($input['product_id'], $input['branch_id'], $input['quantity'], $expected_arrival_date);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
-        /* TODO :: Update quantity of product */
+        /* Inventory Movement */
+        /* Declaring initial quantity on default main branch */
+        $inventory = Inventory::where('branch_id', $input['branch_id'])
+            ->where('product_id', $input['product_id'])->first();
+        $updated_quantity = $inventory->quantity + $request['quantity'];
+
+        InventoryController::update($inventory->id, $updated_quantity);
+        InventoryMovementController::create($response['data']['product_order']['id'], InventoryMovement::$order, $request['quantity'], $updated_quantity);
 
         return redirect(route('product_orders.index'))
             ->with($status, $response['message']);
@@ -79,7 +90,8 @@ class ProductOrdersController extends Controller
             ->select('product_orders.id',
                 'products.name as product_name',
                 'product_orders.quantity',
-                'product_orders.expected_arrival_date')
+                'product_orders.expected_arrival_date',
+                'product_orders.created_at')
             ->leftJoin('products', 'product_orders.product_id', '=', 'products.id');
 
         return DataTables::query($product_orders)
