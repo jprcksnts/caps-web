@@ -46,15 +46,24 @@
 
                                 <div class="form-group mb-2">
                                     <label class="form-control-label" for="product_type_id">Product Type</label>
-                                    <select class="form-control" id="product_type_id" name="product_type_id">
-                                        @foreach ($product_types as $product_type)
-                                            <option value="{{ $product_type->id }}" id="{{ $product_type->id }}"
-                                                    @if (isset($product)) @if ($product->product_type_id == $product_type->id)
-                                                    selected @endif @endif>
-                                                {{ $product_type->type }}
+                                    @if(count($product_types) > 0)
+                                        <select class="form-control" id="product_type_id" name="product_type_id">
+                                            @foreach ($product_types as $product_type)
+                                                <option value="{{ $product_type->id }}" id="{{ $product_type->id }}"
+                                                        @if (isset($product)) @if ($product->product_type_id == $product_type->id)
+                                                        selected @endif @endif>
+                                                    {{ $product_type->type }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    @else
+                                        <select class="form-control" id="product_type_id" name="product_type_id"
+                                                disabled>
+                                            <option value="0" id="0">
+                                                No product types found.
                                             </option>
-                                        @endforeach
-                                    </select>
+                                        </select>
+                                    @endif
                                 </div>
 
                                 <div class="form-group mb-2">
@@ -66,16 +75,19 @@
                                 </div>
 
                                 @if ($form_action['action'] == 'create')
-                                <div class="form-group mb-2">
-                                    <label class="form-control-label" for="quantity">
-                                        Initial Quantity
-                                    </label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity"
-                                           value="{{ $product->quantity ?? old('quantity') }}">
-                                </div>
+                                    <div class="form-group mb-2">
+                                        <label class="form-control-label" for="quantity">
+                                            Initial Quantity
+                                        </label>
+                                        <input type="number" class="form-control" id="quantity" name="quantity"
+                                               value="{{ $product->quantity ?? old('quantity') }}">
+                                    </div>
                                 @endif
 
-                                <button class="btn btn-primary btn-block mt-4 w-25" type="submit">Submit</button>
+                                <button class="btn btn-primary btn-block mt-4 w-25" type="submit"
+                                        @if(count($product_types) < 1) disabled @endif>
+                                    Submit
+                                </button>
                             </form>
                         </div>
                     </div>
