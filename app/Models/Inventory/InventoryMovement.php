@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class InventoryMovement extends Model
 {
+    static $order = 'product_order';
+    static $sale = 'product_sale';
+
     /**
      * The attributes that are mass assignable.
      *

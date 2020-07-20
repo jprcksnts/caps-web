@@ -68,13 +68,6 @@
                                 <div class="col-sm-9">
                                     <p class="font-weight-normal">{{ $product->code }}</p>
                                 </div>
-                                {{-- Quantity --}}
-                                <div class="col-sm-3">
-                                    <small class="text-uppercase text-muted font-weight-bold">Quantity</small>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="font-weight-normal">{{ $product->quantity }}</p>
-                                </div>
                                 {{-- Created At --}}
                                 <div class="col-sm-3">
                                     <small class="text-uppercase text-muted font-weight-bold">Created At</small>

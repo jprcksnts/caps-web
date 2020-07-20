@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Core\Inventory\InventoryController;
+use App\Http\Controllers\Core\inventory\InventoryMovementController;
 use App\Http\Controllers\Core\Product\ProductController;
+use App\Http\Controllers\Core\Product\ProductOrderController;
+use App\Models\Branch\Branch;
+use App\Models\Inventory\InventoryMovement;
 use App\Models\Product\Product;
 use App\Models\Product\ProductType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +28,7 @@ class ProductsController extends Controller
     {
         $product_types = ProductType::all();
         $form_action = [
+            'action' => 'create',
             'page_title' => 'Create New Product',
             'route' => route('products.store'),
         ];
@@ -32,6 +39,18 @@ class ProductsController extends Controller
     {
         $input = $request->all();
         $response = ProductController::create($input['product_type_id'], $input['name'], $input['code']);
+
+        if ($request['quantity'] > 0) {
+            $new_product = $response['data']['product'];
+            $default_branch = Branch::$WAREHOUSE;
+            $product_order = ProductOrderController::create($new_product->id, $default_branch, $request['quantity'], Carbon::now());
+
+            /* Inventory Movement */
+            /* Declaring initial quantity on default main branch */
+            InventoryController::create($default_branch, $new_product->id, $request['quantity']);
+            InventoryMovementController::create($product_order['data']['product_order']['id'], InventoryMovement::$order, $request['quantity'], $request['quantity']);
+        }
+
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         return redirect(route('products.index'))
@@ -42,6 +61,7 @@ class ProductsController extends Controller
     {
         $product_types = ProductType::all();
         $form_action = [
+            'action' => 'edit',
             'page_title' => 'Update Product ID #' . $product->id,
             'route' => route('products.update', ['product' => $product->id]),
         ];

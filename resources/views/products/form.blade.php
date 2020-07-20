@@ -65,6 +65,7 @@
                                            value="{{ $product->code ?? old('code') }}">
                                 </div>
 
+                                @if ($form_action['action'] == 'create')
                                 <div class="form-group mb-2">
                                     <label class="form-control-label" for="quantity">
                                         Initial Quantity
@@ -72,6 +73,7 @@
                                     <input type="number" class="form-control" id="quantity" name="quantity"
                                            value="{{ $product->quantity ?? old('quantity') }}">
                                 </div>
+                                @endif
 
                                 <button class="btn btn-primary btn-block mt-4 w-25" type="submit">Submit</button>
                             </form>

@@ -39,6 +39,19 @@
                                 @csrf
 
                                 <div class="form-group mb-2">
+                                    <label class="form-control-label" for="branch_id">Branch</label>
+                                    <select class="form-control" id="branch_id" name="branch_id">
+                                        @foreach ($branches as $branch)
+                                            <option value="{{ $branch->id }}" id="{{ $branch->id }}"
+                                                    @if (isset($product_sale)) @if ($product_sale->branch_id == $branch->id)
+                                                    selected @endif @endif>
+                                                {{ $branch->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-2">
                                     <label class="form-control-label" for="product_uuid">Product</label>
                                     <select class="form-control" id="product_id" name="product_id">
                                         @foreach ($products as $product)
