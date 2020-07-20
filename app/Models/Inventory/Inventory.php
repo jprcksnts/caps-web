@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Models\Branch;
+namespace App\Models\Inventory;
 
-use App\Models\Inventory\Inventory;
-use App\Models\Product\ProductSale;
+use App\Models\Branch\Branch;
+use App\Models\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 
-class Branch extends Model
+class Inventory extends Model
 {
-    static $WAREHOUSE = 1;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'address', 'city',
+        'branch_id', 'product_id', 'quantity',
     ];
 
     /**
@@ -37,13 +35,13 @@ class Branch extends Model
 
     ];
 
-    public function productSales()
+    public function branch()
     {
-        return $this->hasMany(ProductSale::class);
+        return $this->belongsTo(Branch::class);
     }
 
-    public function inventories()
+    public function product()
     {
-        return $this->hasMany(Inventory::class);
+        return $this->belongsTo(Product::class);
     }
 }
