@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Core\Product\ProductOrderController;
+use App\Models\Branch\Branch;
 use App\Models\Product\Product;
 use App\Models\Product\ProductOrder;
 use Illuminate\Http\Request;
@@ -21,18 +22,19 @@ class ProductOrdersController extends Controller
     public function create()
     {
         $products = Product::all();
+        $branches = Branch::all();
         $form_action = [
             'page_title' => 'Create New Product Order',
             'route' => route('product_orders.store'),
         ];
-        return view('product_orders.form', compact('form_action', 'products'));
+        return view('product_orders.form', compact('form_action', 'products', 'branches'));
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $expected_arrival_date = date('Y-m-d', strtotime(str_replace('-', '/', $input['expected_arrival_date'])));
-        $response = ProductOrderController::create($input['product_id'], $input['quantity'], $expected_arrival_date);
+        $response = ProductOrderController::create($input['product_id'], $input['branch_id'], $input['quantity'], $expected_arrival_date);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         /* TODO :: Update quantity of product */
@@ -50,12 +52,13 @@ class ProductOrdersController extends Controller
     {
         $product_order->expected_arrival_date = date('m/d/Y', strtotime($product_order->expected_arrival_date));
         $products = Product::all();
+        $branches = Branch::all();
         $form_action = [
             'page_title' => 'Update Product Order ID #' . $product_order->id,
             'route' => route('product_orders.update', ['product_order' => $product_order->id]),
         ];
 
-        return view('product_orders.form', compact('form_action', 'product_order', 'products'));
+        return view('product_orders.form', compact('form_action', 'product_order', 'products', 'branches'));
     }
 
     public function update(Request $request, ProductOrder $product_order)
@@ -63,7 +66,7 @@ class ProductOrdersController extends Controller
         $input = $request->all();
         $expected_arrival_date = date('Y-m-d', strtotime(str_replace('-', '/', $input['expected_arrival_date'])));
 
-        $response = ProductOrderController::update($product_order->id, $input['product_id'], $input['quantity'], $expected_arrival_date);
+        $response = ProductOrderController::update($product_order->id, $input['product_id'], $input['branch_id'], $input['quantity'], $expected_arrival_date);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         return redirect(route('product_orders.show', ['product_order' => $product_order->id]))

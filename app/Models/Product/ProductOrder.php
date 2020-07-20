@@ -2,6 +2,7 @@
 
 namespace App\Models\Product;
 
+use App\Models\Branch\Branch;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductOrder extends Model
@@ -12,7 +13,7 @@ class ProductOrder extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id', 'quantity', 'expected_arrival_date',
+        'product_id', 'branch_id', 'quantity', 'expected_arrival_date',
     ];
 
     /**
@@ -36,5 +37,10 @@ class ProductOrder extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 }

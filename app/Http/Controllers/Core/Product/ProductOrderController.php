@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProductOrderController extends Controller
 {
-    public static function create($product_id, $quantity, $expected_arrival_date)
+    public static function create($product_id, $branch_id, $quantity, $expected_arrival_date)
     {
         $response = array();
 
@@ -20,6 +20,7 @@ class ProductOrderController extends Controller
 
             $product_order = new ProductOrder();
             $product_order->product_id = $product_id;
+            $product_order->branch_id = $branch_id;
             $product_order->quantity = $quantity;
             $product_order->expected_arrival_date = $expected_arrival_date;
             $product_order->save();
@@ -60,7 +61,7 @@ class ProductOrderController extends Controller
         return $response;
     }
 
-    public static function update($product_order_id, $product_id, $quantity, $expected_arrival_date)
+    public static function update($product_order_id, $product_id, $branch_id, $quantity, $expected_arrival_date)
     {
         $response = array();
 
@@ -71,6 +72,7 @@ class ProductOrderController extends Controller
                 DB::beginTransaction();
 
                 $product_order->product_id = $product_id;
+                $product_order->branch_id = $branch_id;
                 $product_order->quantity = $quantity;
                 $product_order->expected_arrival_date = $expected_arrival_date;
                 $product_order->save();

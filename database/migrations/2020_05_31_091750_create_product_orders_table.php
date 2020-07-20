@@ -16,6 +16,7 @@ class CreateProductOrdersTable extends Migration
         Schema::create('product_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->references('id')->on('products');
+            $table->foreignId('branch_id')->references('id')->on('branches');
             $table->unsignedInteger('quantity');
             $table->date('expected_arrival_date');
             $table->timestamps();
