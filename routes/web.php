@@ -22,6 +22,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('dashboard', 'DashboardController')->name('dashboard');
 
+    Route::get('inventories', 'InventoriesController@index')->name('inventories.index');
+    Route::get('retrieve_list/inventories', 'InventoriesController@retrieveList');
+
     Route::resource('product_sales', 'ProductSalesController')->except(['update', 'destroy']);
     Route::post('product_sales/{product_sale}/update', 'ProductSalesController@update')->name('product_sales.update');
     Route::get('retrieve_list/product_sales', 'ProductSalesController@retrieveList');

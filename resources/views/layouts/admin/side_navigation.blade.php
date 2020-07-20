@@ -27,6 +27,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('inventories.index') }}" id="inventories">
+                            <i class="fas fa-th"></i>
+                            <span class="nav-link-text">
+                                Inventories
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#navbar-transactions" data-toggle="collapse" role="button"
                            aria-expanded="true" aria-controls="navbar-products">
                             <i class="fas fa-dolly-flatbed"></i>
