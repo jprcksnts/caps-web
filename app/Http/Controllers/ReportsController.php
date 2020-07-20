@@ -58,7 +58,7 @@ class ReportsController extends Controller
     {
         $inventory_movements = DB::table('inventory_movements')
             ->when($from_date != null && $to_date != null, function ($query) use ($from_date, $to_date) {
-                return $query->whereBetween('billings.created_at', [$from_date, $to_date]);
+                return $query->whereBetween('inventory_movements.created_at', [$from_date, $to_date]);
             })
             ->orderBy('inventory_movements.created_at', 'desc')
             ->get();
