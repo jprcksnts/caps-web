@@ -97,7 +97,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('reports') }}" id="reports">
+                        <a class="nav-link" href="{{ route('reports.index') }}" id="reports">
                             <i class="fas fa-chart-area"></i>
                             <span class="nav-link-text">
                                 Reports

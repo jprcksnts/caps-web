@@ -51,6 +51,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('mail/compose', 'NewsletterSubscriptionsController@compose')->name('newsletter_subscriptions.compose');
     Route::post('mail/newsletter_subscriptions', 'NewsletterSubscriptionsController@mail')->name('newsletter_subscriptions.mail');
 
-    Route::get('reports', 'ReportsController@index')->name('reports');
+    Route::get('reports', 'ReportsController@index')->name('reports.index');
+    Route::post('reports/generate', 'ReportsController@generate')->name('reports.generate');
 
 });
