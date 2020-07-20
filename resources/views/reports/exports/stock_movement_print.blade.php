@@ -12,6 +12,7 @@
         <th>Movement Type</th>
         <th>Quantity</th>
         <th>Running Quantity</th>
+        <th>Transaction Date</th>
     </tr>
     </thead>
 
@@ -19,7 +20,7 @@
     @if ($detail_collection->count() > 0)
         @foreach($detail_collection as $product_type => $detail)
             <tr class="text-body" style="background-color: black; color: white;">
-                <td colspan="4"> {{ $product_type }}</td>
+                <td colspan="5"> {{ $product_type }}</td>
             </tr>
 
             @foreach ($detail as $product_name => $product_movements)
@@ -33,6 +34,7 @@
                         <td> {{ $movement->movement_type }} </td>
                         <td> {{ $movement->quantity }} </td>
                         <td> {{ $movement->r_quantity }} </td>
+                        <td> {{ $movement->created_at }} </td>
                     </tr>
                 @endforeach
 
