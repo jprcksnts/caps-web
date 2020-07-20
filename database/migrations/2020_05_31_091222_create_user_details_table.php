@@ -17,7 +17,7 @@ class CreateUserDetailsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('first_name', 64);
-            $table->string('last_nmae', 32);
+            $table->string('last_name', 32);
             $table->timestamps();
         });
     }
