@@ -1,7 +1,7 @@
 @component('mail::message')
 # Greetings!
 
-{{ $data['message'] }}
+{{ $data['content'] }}
 
 Thanks,<br>
 {{ config('app.name') }}
