@@ -44,7 +44,7 @@
                                            value="{{ $product_type->type ?? old('type') }}">
                                 </div>
 
-                                <button class="btn btn-primary btn-block mt-4 w-25" type="submit">Submit</button>
+                                <button class="btn btn-primary btn-block mt-4 w-50" type="submit">Submit</button>
                             </form>
                         </div>
                     </div>

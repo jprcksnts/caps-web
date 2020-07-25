@@ -92,7 +92,7 @@
                                            value="{{ $product_sale->quantity ?? old('quantity') }}">
                                 </div>
 
-                                <button class="btn btn-primary btn-block mt-4 w-25" type="submit"
+                                <button class="btn btn-primary btn-block mt-4 w-50" type="submit"
                                         @if(count($products) < 1 || count($branches) < 1) disabled @endif>
                                     Submit
                                 </button>

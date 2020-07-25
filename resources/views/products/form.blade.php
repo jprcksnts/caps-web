@@ -84,7 +84,7 @@
                                     </div>
                                 @endif
 
-                                <button class="btn btn-primary btn-block mt-4 w-25" type="submit"
+                                <button class="btn btn-primary btn-block mt-4 w-50" type="submit"
                                         @if(count($product_types) < 1) disabled @endif>
                                     Submit
                                 </button>
