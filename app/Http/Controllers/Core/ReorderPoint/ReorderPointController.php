@@ -45,17 +45,17 @@ class ReorderPointController extends Controller
             if ($sale_count > 0)
                 $usage_avg = ($sale_quantity / $sale_count);
 
-            Log::debug('Sale Qty: ' . $sale_quantity);
-            Log::debug('Sale Count: ' . $sale_count);
+//            Log::debug('Sale Qty: ' . $sale_quantity);
+//            Log::debug('Sale Count: ' . $sale_count);
 
-            Log::debug('Usage Max: ' . $usage_max);
-            Log::debug('Usage Avg: ' . $usage_avg);
+//            Log::debug('Usage Max: ' . $usage_max);
+//            Log::debug('Usage Avg: ' . $usage_avg);
 
             $safety_stock = ($usage_max * self::$LEAD_TIME) - ($usage_avg * self::$LEAD_TIME);
             $reorder_point = ($usage_avg * self::$LEAD_TIME) + $safety_stock;
 
-            Log::debug('Safety Stock: ' . $safety_stock);
-            Log::debug('Reorder Point: ' . $reorder_point);
+//            Log::debug('Safety Stock: ' . $safety_stock);
+//            Log::debug('Reorder Point: ' . $reorder_point);
 
             $data = array();
             $data['reorder_point'] = $reorder_point;
