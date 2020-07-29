@@ -36,6 +36,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('products', 'ProductsController')->except(['update', 'destroy']);
     Route::post('products/{product}/update', 'ProductsController@update')->name('products.update');
     Route::get('retrieve_list/products', 'ProductsController@retrieveList');
+    Route::get('retrieve_list/product_reorder_points', 'ProductsController@retrieveReorderPoints');
 
     Route::resource('product_types', 'ProductTypesController')->except(['update', 'destroy']);
     Route::post('product_types/{product_type}/update', 'ProductTypesController@update')->name('product_types.update');

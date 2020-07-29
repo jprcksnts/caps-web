@@ -8,6 +8,7 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request)
     {
-        return view('dashboard');
+        $table_headers = ['code', 'product', 'quantity', 're-order point'];
+        return view('dashboard', compact(['table_headers']));
     }
 }

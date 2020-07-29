@@ -60,6 +60,7 @@ class ReorderPointController extends Controller
             $data = array();
             $data['reorder_point'] = $reorder_point;
             $data['needs_restock'] = (($inventory->quantity) < $reorder_point) ? true : false;
+            $data['current_inventory'] = $inventory->quantity;
 
             $response['data'] = $data;
             $response['message'] = 'Reorder point calculation successful.';

@@ -6,6 +6,7 @@ use App\Http\Controllers\Core\Inventory\InventoryController;
 use App\Http\Controllers\Core\inventory\InventoryMovementController;
 use App\Http\Controllers\Core\Product\ProductController;
 use App\Http\Controllers\Core\Product\ProductOrderController;
+use App\Http\Controllers\Core\ReorderPoint\ReorderPointController;
 use App\Models\Branch\Branch;
 use App\Models\Inventory\InventoryMovement;
 use App\Models\Product\Product;
@@ -100,5 +101,22 @@ class ProductsController extends Controller
             })
             ->rawColumns(['action_column'])
             ->toJson();
+    }
+
+    public function retrieveReorderPoints()
+    {
+        $products = Product::all();
+        foreach ($products as $key => $product) {
+            $reorder_point_summary = ReorderPointController::calculateReorderPoint($product->id);
+
+            $product->quantity = $reorder_point_summary['data']['current_inventory'];
+            $product->reorder_point = $reorder_point_summary['data']['reorder_point'];
+
+            if (!$reorder_point_summary['data']['needs_restock']) {
+                $products->forget($key);
+            }
+        }
+
+        return DataTables::collection($products)->toJson();
     }
 }
