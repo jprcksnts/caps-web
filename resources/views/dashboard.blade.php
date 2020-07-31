@@ -19,12 +19,12 @@
 @section('content')
     <div class="col">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-12">
                 <div class="card-wrapper">
                     @include('shared.flash_messages')
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="mb-0 font-weight-900">Product - needs Restock!</h3>
+                            <h3 class="mb-0 font-weight-900">Products below re-order points</h3>
                         </div>
                         <div class="table-responsive py-3">
                             <table class="table table-flush table-hover" id="datatable-list" width="100%">
