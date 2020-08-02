@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Core\ReorderPoint\ReorderPointController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,15 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $response = ReorderPointController::hasProductsBelowReorderPoints();
+        if ($response['status_code'] == Response::HTTP_OK) {
+            if ($response['data']['code'] == ReorderPointController::$CODE_HAS_BELOW_THRESHOLD) {
+                session()->flash('has_product_below_threshold', true);
+            }
+        }
     }
 }

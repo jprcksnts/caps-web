@@ -20,9 +20,9 @@
                             <form class="d-inline" method="POST" action="{{ route('subscribe') }}">
                                 @csrf
                                 <input type="email" class="form-control mb-2" id="email" name="email"
-                                       placeholder="juandelacruz@example.com">
-                                <input type="text" class="form-control" id="contact_number" name="mobile"
-                                       placeholder="+ 639">
+                                       placeholder="juandelacruz@example.com" required>
+                                <input type="number" class="form-control" id="contact_number" name="mobile"
+                                       placeholder="09260000000" required>
                                 <button class="btn btn-default btn-block mt-3" type="submit">Subscribe</button>
                             </form>
                         </div>
@@ -31,4 +31,17 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        function phonenumber(inputtxt) {
+            var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+            if (inputtxt.value.match(phoneno)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
 @endsection

@@ -40,6 +40,8 @@
     </div>
     @endguest
 
+    @include('shared.modal_reorder_alert')
+
     {{--Scripts--}}
     <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
@@ -49,8 +51,15 @@
     <script src="{{ asset('vendor/lavalamp/js/jquery.lavalamp.min.js') }}"></script>
     <script src="{{ asset('vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
     {{--Custom Page Scripts--}}
-    @yield('scripts')
     <script src="{{ asset('js/argon.js?v=1.0.0') }}"></script>
+    <script>
+        $(document).ready(function () {
+            @if(session()->has('has_product_below_threshold'))
+                $('#modalProductBelowThreshold').modal('show');
+            @endif
+        });
+    </script>
+    @yield('scripts')
 
     </body>
 </html>
