@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Core\Inventory\InventoryController;
 use App\Http\Controllers\Core\inventory\InventoryMovementController;
 use App\Http\Controllers\Core\Product\ProductSaleController;
+use App\Http\Controllers\Core\ReorderPoint\ReorderPointController;
 use App\Models\Branch\Branch;
 use App\Models\Inventory\Inventory;
 use App\Models\Inventory\InventoryMovement;
@@ -20,6 +21,7 @@ class ProductSalesController extends Controller
     public function index()
     {
         $table_headers = ['id', 'product', 'branch', 'quantity', 'transaction date', ''];
+
         return view('product_sales.index', compact('table_headers'));
     }
 
@@ -48,6 +50,13 @@ class ProductSalesController extends Controller
 
         InventoryController::update($inventory->id, $updated_quantity);
         InventoryMovementController::create($response['data']['product_sale']['id'], InventoryMovement::$sale, $request['quantity'], $updated_quantity);
+
+        $reorder_point_response = ReorderPointController::hasProductsBelowReorderPoints();
+        if ($reorder_point_response['status_code'] == Response::HTTP_OK) {
+            if ($reorder_point_response['data']['code'] == ReorderPointController::$CODE_HAS_BELOW_THRESHOLD) {
+                session()->flash('has_product_below_threshold', true);
+            }
+        }
 
         return redirect(route('product_sales.index'))
             ->with($status, $response['message']);
