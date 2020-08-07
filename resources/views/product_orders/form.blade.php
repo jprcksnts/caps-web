@@ -38,7 +38,7 @@
                             <form method="post" action="{{ $form_action['route'] }}" role="form" id="form-data">
                                 @csrf
 
-                                <div class="form-group mb-2">
+                                <div class="form-group mb-2 d-none">
                                     <label class="form-control-label" for="branch_id">Branch</label>
                                     @if(count($branches) > 0)
                                         <select class="form-control" id="branch_id" name="branch_id">

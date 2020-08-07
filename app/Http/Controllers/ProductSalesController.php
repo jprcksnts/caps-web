@@ -14,6 +14,7 @@ use App\Models\Product\ProductSale;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductSalesController extends Controller
@@ -28,7 +29,8 @@ class ProductSalesController extends Controller
     public function create()
     {
         $products = Product::all();
-        $branches = Branch::all();
+        $branches = Branch::whereNotIn('id', [Branch::$WAREHOUSE])->get();
+
         $form_action = [
             'page_title' => 'Create New Product Sale',
             'route' => route('product_sales.store'),
@@ -38,14 +40,16 @@ class ProductSalesController extends Controller
 
     public function store(Request $request)
     {
+        Log::debug($request->all());
         $input = $request->all();
         $response = ProductSaleController::create($input['product_id'], $input['branch_id'], $input['quantity']);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         /* Inventory Movement */
         /* Declaring initial quantity on default main branch */
-        $inventory = Inventory::where('branch_id', $input['branch_id'])
+        $inventory = Inventory::where('branch_id', Branch::$WAREHOUSE)
             ->where('product_id', $input['product_id'])->first();
+        Log::debug($inventory);
         $updated_quantity = $inventory->quantity - $request['quantity'];
 
         InventoryController::update($inventory->id, $updated_quantity);
