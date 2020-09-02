@@ -57,8 +57,11 @@
                                     </select>
                                 </div>
 
-                                <button class="btn btn-primary btn-block mt-4 w-50" type="submit">
-                                    Submit
+                                <button class="btn btn-secondary mt-4 w-25" name="action" type="submit" value="pdf">
+                                    Generate PDF
+                                </button>
+                                <button class="btn btn-primary mt-4 w-25" name="action" type="submit" value="excel">
+                                    Export to Excel
                                 </button>
                             </form>
                         </div>

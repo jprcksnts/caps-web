@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReportsExport;
 use App\Models\Branch\Branch;
 use App\Models\Inventory\InventoryMovement;
 use App\Models\Product\Product;
@@ -11,6 +12,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportsController extends Controller
 {
@@ -47,11 +49,34 @@ class ReportsController extends Controller
 
         $input['branch_name'] = Branch::find($input['branch_id'])->name;
 
-        $print = PDF::loadView('reports.reports_main', compact('input', 'report_details', 'date_printed',
-            'detail_collection'))
-            ->setPaper('a4', 'portrait');
+        switch ($request['action']) {
+            case 'excel':
+                $file_name = $report_details['report'];
+                $detail_collection = $detail_collection->map(function ($detail) {
+                    return [
+                        'product_name' => $detail->product_name,
+                        'product_type' => $detail->product_type,
+                        'movement_type' => $detail->movement_type,
+                        'quantity' => $detail->quantity,
+                        'r_quantity' => $detail->r_quantity,
+                        'created_at' => $detail->created_at
+                    ];
+                });
+                $header = ['Item Name', 'Product Type', 'Movement Type', 'Quantity', 'Running Quantity', 'Transaction Date'];
+                return Excel::download(new ReportsExport($detail_collection, $header), $file_name . '.xlsx');
+                break;
+            case 'pdf':
+                $detail_collection = $detail_collection->groupBy(['product_type', 'product_name']);
+                $print = PDF::loadView('reports.reports_main', compact(
+                    'input',
+                    'report_details',
+                    'date_printed',
+                    'detail_collection'
+                ))->setPaper('a4', 'portrait');
 
-        return $print->stream($report_details['report'] . '_' . Carbon::now()->format('YmdHis') . '.pdf');
+                return $print->stream($report_details['report'] . '_' . Carbon::now()->format('YmdHis') . '.pdf');
+                break;
+        }
     }
 
     public function reportsQuery($input, $from_date, $to_date)
@@ -69,7 +94,6 @@ class ReportsController extends Controller
             if ($inventory_movement->type == InventoryMovement::$order) {
                 $transaction = ProductOrder::find($inventory_movement->tx_id);
                 $inventory_movement->movement_type = 'Product Order';
-
             } else if ($inventory_movement->type == InventoryMovement::$sale) {
                 $transaction = ProductSale::find($inventory_movement->tx_id);
                 $inventory_movement->movement_type = 'Product Sale';
@@ -82,12 +106,11 @@ class ReportsController extends Controller
                 $inventory_movement->branch_name = $branch->name;
                 $inventory_movement->product_name = $product->name;
                 $inventory_movement->product_type = $product->productType->type;
-
             } else {
                 $inventory_movements->forget($key);
             }
         }
 
-        return $inventory_movements->groupBy(['product_type', 'product_name']);
+        return $inventory_movements;
     }
 }
