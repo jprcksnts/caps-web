@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class BranchController extends Controller
 {
-    public static function create($name, $address, $city)
+    public static function create($code, $name, $address, $city)
     {
         $response = array();
 
@@ -19,6 +19,7 @@ class BranchController extends Controller
             DB::beginTransaction();
 
             $branch = new Branch();
+            $branch->code = $code;
             $branch->name = $name;
             $branch->address = $address;
             $branch->city = $city;
@@ -69,7 +70,7 @@ class BranchController extends Controller
         return $response;
     }
 
-    public static function update($branch_id, $name, $address, $city)
+    public static function update($branch_id, $code, $name, $address, $city)
     {
         $response = array();
 
@@ -80,6 +81,7 @@ class BranchController extends Controller
                 // if branch exists
                 DB::beginTransaction();
 
+                $branch->code = $code;
                 $branch->name = $name;
                 $branch->address = $address;
                 $branch->city = $city;

@@ -22,6 +22,8 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('dashboard', 'DashboardController')->name('dashboard');
 
+    Route::post('import', 'ImportDataController@import')->name('import');
+
     Route::get('inventories', 'InventoriesController@index')->name('inventories.index');
     Route::get('retrieve_list/inventories', 'InventoriesController@retrieveList');
 
