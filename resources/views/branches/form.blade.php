@@ -36,6 +36,14 @@
                             <form method="post" action="{{ $form_action['route'] }}" role="form" id="form-data">
                                 @csrf
                                 <div class="form-group mb-2">
+                                    <label class="form-control-label" for="code">
+                                        Branch Code
+                                    </label>
+                                    <input type="text" class="form-control" id="code" name="code" maxlength="30"
+                                           value="{{ $branch->code ?? old('code') }}">
+                                </div>
+
+                                <div class="form-group mb-2">
                                     <label class="form-control-label" for="name">
                                         Branch Name
                                     </label>

@@ -91,6 +91,7 @@
                     order: [1, 'asc'],
                     columns: [
                         {data: 'id', name: 'id'},
+                        {data: 'code', name: 'code'},
                         {data: 'name', name: 'name'},
                         {data: 'address', name: 'address'},
                         {data: 'city', name: 'city'},

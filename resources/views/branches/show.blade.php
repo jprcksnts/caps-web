@@ -42,6 +42,13 @@
                                 <div class="col-sm-9">
                                     <p class="font-weight-normal">{{ $branch->id }}</p>
                                 </div>
+                                {{-- Branch Code --}}
+                                <div class="col-sm-3">
+                                    <small class="text-uppercase text-muted font-weight-bold">Branch Code</small>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="font-weight-normal">{{ $branch->code }}</p>
+                                </div>
                                 {{-- Branch Name --}}
                                 <div class="col-sm-3">
                                     <small class="text-uppercase text-muted font-weight-bold">Branch Name</small>

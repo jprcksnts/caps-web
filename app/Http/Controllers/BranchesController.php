@@ -12,7 +12,7 @@ class BranchesController extends Controller
 {
     public function index()
     {
-        $table_headers = ['id', 'name', 'address', 'city', 'updated at', ''];
+        $table_headers = ['id', 'code', 'name', 'address', 'city', 'updated at', ''];
         return view('branches.index', compact('table_headers'));
     }
 
@@ -28,7 +28,7 @@ class BranchesController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $response = BranchController::create($input['name'], $input['address'], $input['city']);
+        $response = BranchController::create($input['code'], $input['name'], $input['address'], $input['city']);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         return redirect(route('branches.index'))
@@ -48,7 +48,7 @@ class BranchesController extends Controller
     public function update(Request $request, Branch $branch)
     {
         $input = $request->all();
-        $response = BranchController::update($branch->id, $input['name'], $input['address'], $input['city']);
+        $response = BranchController::update($branch->id, $input['code'], $input['name'], $input['address'], $input['city']);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         return redirect(route('branches.show', ['branch' => $branch->id]))
