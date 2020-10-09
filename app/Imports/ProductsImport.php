@@ -18,10 +18,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class ProductsImport implements ToCollection, WithHeadingRow
 {
+    public $data;
+
     public function collection(Collection $rows)
     {
         try {
             $default_branch = Branch::$WAREHOUSE;
+            $failed_uploads = 0;
 
             foreach ($rows as $row) {
                 $product_name = $row['product_name'];
@@ -42,13 +45,22 @@ class ProductsImport implements ToCollection, WithHeadingRow
                         $product_order = ProductOrderController::create($new_product->id, $default_branch, $initial_quantity, Carbon::now());
                         InventoryController::create($default_branch, $new_product->id, $initial_quantity);
                         InventoryMovementController::create($product_order['data']['product_order']['id'], InventoryMovement::$order, $initial_quantity, $initial_quantity);
+                    } else {
+                        $failed_uploads++;
                     }
                 }
+            }
+
+            if ($failed_uploads <= 0) {
+                $this->data = ['status' => 'success', 'message' => 'Data import is completed successfully.'];
+            } else {
+                $this->data = ['status' => 'error', 'message' => 'An error occurred during import, please check uploaded document and try again.'];
             }
 
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             Log::error($exception->getTraceAsString());
+            $this->data = ['status' => 'error', 'message' => 'An error occurred during import, please check uploaded document and try again.'];
         }
     }
 }

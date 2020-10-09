@@ -26,7 +26,10 @@ class ImportDataController extends Controller
                     break;
             }
 
-            return redirect()->back();
+            $import_response = $import->data;
+
+            return redirect()->back()
+                ->with($import_response['status'], $import_response['message']);
         }
     }
 }
