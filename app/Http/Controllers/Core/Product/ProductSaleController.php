@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Core\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product\ProductSale;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProductSaleController extends Controller
 {
-    public static function create($product_id, $branch_id, $quantity)
+    public static function create($product_id, $branch_id, $quantity, $created_date = null)
     {
         $response = array();
 
@@ -22,6 +23,7 @@ class ProductSaleController extends Controller
             $product_sale->product_id = $product_id;
             $product_sale->branch_id = $branch_id;
             $product_sale->quantity = $quantity;
+            $product_sale->created_at = $created_date ? $created_date : Carbon::now();
             $product_sale->save();
 
             DB::commit();

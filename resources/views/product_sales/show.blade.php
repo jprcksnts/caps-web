@@ -38,7 +38,7 @@
                             <div class="pb-4">
                                 <p class="small font-weight-bold"> PRODUCT QR CODE </p>
                                 <img src="{{ asset('generated_code/' . $product_sale->product->uuid . '.svg') }}"
-                                     class="img-fluid">
+                                     class="img-fluid" style="max-height: 160px;">
                             </div>
                             <div class="row">
                                 {{-- ID --}}

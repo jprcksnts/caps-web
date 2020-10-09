@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ProductSalesImport;
 use App\Imports\ProductsImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,13 +20,16 @@ class ImportDataController extends Controller
             switch ($import_action) {
                 case 'import_products':
                     $import = new ProductsImport();
-                    Excel::import($import, $document);
+                    break;
+                case 'import_product_sales':
+                    $import = new ProductSalesImport();
                     break;
                 default:
                     return abort(500);
                     break;
             }
 
+            Excel::import($import, $document);
             $import_response = $import->data;
 
             return redirect()->back()

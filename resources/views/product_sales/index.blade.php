@@ -22,6 +22,11 @@
         <span class="btn-inner--icon mr-2"><i class="fas fa-plus"></i></span>
         Create New
     </a>
+    <a href="#" class="btn btn-md btn-neutral text-dark" data-toggle="modal" data-target="#modalImportProductSale">
+        <span class="btn-inner--icon mr-2"><i class="fas fa-upload"></i></span>
+        Import
+    </a>
+    @include('shared.modal_import_product_sale')
 @stop
 
 @section('content')
