@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Log;
 
 class InventoryController extends Controller
 {
-    public static function create($branch_id, $product_id, $quantity)
+    public static function create($branch_id, $product_id, $quantity, $use_db_transaction = true)
     {
         $response = array();
 
         try {
-            DB::beginTransaction();
+            if ($use_db_transaction)
+                DB::beginTransaction();
 
             $inventory = Inventory::where('branch_id', $branch_id)
                 ->where('product_id', $product_id)->first();
@@ -31,7 +32,8 @@ class InventoryController extends Controller
                 $inventory->quantity = $quantity;
                 $inventory->save();
 
-                DB::commit();
+                if ($use_db_transaction)
+                    DB::commit();
 
                 $data = array();
                 $data['inventory'] = $inventory;

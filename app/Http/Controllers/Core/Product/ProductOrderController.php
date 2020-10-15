@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Log;
 
 class ProductOrderController extends Controller
 {
-    public static function create($product_id, $branch_id, $quantity, $expected_arrival_date)
+    public static function create($product_id, $branch_id, $quantity, $expected_arrival_date, $use_db_transaction = true)
     {
         $response = array();
 
         try {
-            DB::beginTransaction();
+            if ($use_db_transaction)
+                DB::beginTransaction();
 
             $product_order = new ProductOrder();
             $product_order->product_id = $product_id;
@@ -25,7 +26,8 @@ class ProductOrderController extends Controller
             $product_order->expected_arrival_date = $expected_arrival_date;
             $product_order->save();
 
-            DB::commit();
+            if ($use_db_transaction)
+                DB::commit();
 
             $data = array();
             $data['product_order'] = $product_order;

@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Log;
 
 class InventoryMovementController extends Controller
 {
-    public static function create($tx_id, $type, $quantity, $r_quantity)
+    public static function create($tx_id, $type, $quantity, $r_quantity, $use_db_transaction = true)
     {
         $response = array();
 
         try {
-            DB::beginTransaction();
+            if ($use_db_transaction)
+                DB::beginTransaction();
 
             $inventory_movement = new InventoryMovement();
             $inventory_movement->tx_id = $tx_id;
@@ -26,7 +27,8 @@ class InventoryMovementController extends Controller
             $inventory_movement->r_quantity = $r_quantity;
             $inventory_movement->save();
 
-            DB::commit();
+            if ($use_db_transaction)
+                DB::commit();
 
             $data = array();
             $data['inventory_movement'] = $inventory_movement;

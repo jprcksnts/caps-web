@@ -63,12 +63,13 @@ class ProductController extends Controller
         return $response;
     }
 
-    public static function create($product_type_id, $name, $code)
+    public static function create($product_type_id, $name, $code, $use_db_transaction = true)
     {
         $response = array();
 
         try {
-            DB::beginTransaction();
+            if ($use_db_transaction)
+                DB::beginTransaction();
 
             $product = new Product();
             $product->product_type_id = $product_type_id;
@@ -81,7 +82,8 @@ class ProductController extends Controller
             $image = \QrCode::format('svg')
                 ->size(512)->generate($product->uuid, public_path() . '/generated_code/' . $file_name);
 
-            DB::commit();
+            if ($use_db_transaction)
+                DB::commit();
 
             $data = array();
             $data['product'] = $product;

@@ -31,7 +31,7 @@ class ImportDataController extends Controller
 
             Excel::import($import, $document);
             $import_response = $import->data;
-
+            
             return redirect()->back()
                 ->with($import_response['status'], $import_response['message']);
         }
