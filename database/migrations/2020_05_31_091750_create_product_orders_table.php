@@ -19,6 +19,7 @@ class CreateProductOrdersTable extends Migration
             $table->foreignId('branch_id')->references('id')->on('branches');
             $table->unsignedInteger('quantity');
             $table->date('expected_arrival_date');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

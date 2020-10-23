@@ -5,9 +5,12 @@ namespace App\Models\Branch;
 use App\Models\Inventory\Inventory;
 use App\Models\Product\ProductSale;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model
 {
+    use SoftDeletes;
+
     static $WAREHOUSE = 1;
 
     /**

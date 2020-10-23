@@ -4,9 +4,12 @@ namespace App\Models\Product;
 
 use App\Models\Inventory\Inventory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +39,7 @@ class Product extends Model
 
     public function productType()
     {
-        return $this->belongsTo(ProductType::class);
+        return $this->belongsTo(ProductType::class)->withTrashed();
     }
 
     public function productOrders()

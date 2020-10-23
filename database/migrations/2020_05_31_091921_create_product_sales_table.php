@@ -18,6 +18,7 @@ class CreateProductSalesTable extends Migration
             $table->foreignId('product_id')->references('id')->on('products');
             $table->foreignId('branch_id')->references('id')->on('branches');
             $table->unsignedInteger('quantity');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

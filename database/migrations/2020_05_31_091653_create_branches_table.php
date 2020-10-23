@@ -19,6 +19,7 @@ class CreateBranchesTable extends Migration
             $table->string('name', 128)->unique();
             $table->string('address', 256);
             $table->string('city', 64);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
