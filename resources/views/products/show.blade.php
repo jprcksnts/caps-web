@@ -37,7 +37,8 @@
                         <div class="card-body">
                             <div class="pb-4">
                                 <p class="small font-weight-bold"> GENERATED QR CODE </p>
-                                <img src="{{ asset('generated_code/' . $product->uuid . '.svg') }}" class="img-fluid" style="max-height: 160px;">
+                                <img src="{{ asset('generated_code/' . $product->uuid . '.svg') }}" class="img-fluid"
+                                     style="max-height: 160px;">
                             </div>
                             <div class="row">
                                 {{-- ID --}}
@@ -86,10 +87,16 @@
                         </div>
                         <div class="card-footer text-center">
                             <a href="{{ route('products.edit', ['product' => $product->id]) }}"
-                               class="float-left text-link">
+                               class="btn btn-link float-left text-link my-auto">
                                 Edit Details
                             </a>
-                            <a href="#!" class="float-right text-danger">Delete Product</a>
+                            <form method="post"
+                                  action="{{ route('products.delete', ['product' => $product]) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-link text-link text-danger float-right">
+                                    Delete Product
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -88,10 +88,16 @@
                         </div>
                         <div class="card-footer text-center">
                             <a href="{{ route('branches.edit', ['branch' => $branch->id]) }}"
-                               class="float-left text-link">
+                               class="btn btn-link float-left text-link my-auto">
                                 Edit Details
                             </a>
-                            <a href="#!" class="float-right text-danger">Delete Branch</a>
+                            <form method="post"
+                                  action="{{ route('branches.delete', ['branch' => $branch]) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-link text-link text-danger float-right">
+                                    Delete Branch
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

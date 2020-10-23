@@ -35,6 +35,15 @@ class ProductTypesController extends Controller
             ->with($status, $response['message']);
     }
 
+    public function delete(ProductType $product_type)
+    {
+        $response = ProductTypeController::delete($product_type->id);
+        $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
+
+        return redirect(route('product_types.index'))
+            ->with($status, $response['message']);
+    }
+
     public function edit(ProductType $product_type)
     {
         $form_action = [

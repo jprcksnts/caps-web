@@ -68,10 +68,16 @@
                         </div>
                         <div class="card-footer text-center">
                             <a href="{{ route('product_types.edit', ['product_type' => $product_type->id]) }}"
-                               class="float-left text-link">
+                               class="btn btn-link float-left text-link my-auto">
                                 Edit Details
                             </a>
-                            <a href="#!" class="float-right text-danger">Delete Product Type</a>
+                            <form method="post"
+                                  action="{{ route('product_types.delete', ['product_type' => $product_type]) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-link text-link text-danger float-right">
+                                    Delete Product Type
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

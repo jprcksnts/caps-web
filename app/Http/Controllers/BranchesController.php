@@ -35,6 +35,15 @@ class BranchesController extends Controller
             ->with($status, $response['message']);
     }
 
+    public function delete(Branch $branch)
+    {
+        $response = BranchController::delete($branch->id);
+        $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
+
+        return redirect(route('branches.index'))
+            ->with($status, $response['message']);
+    }
+
     public function edit(Branch $branch)
     {
         $form_action = [

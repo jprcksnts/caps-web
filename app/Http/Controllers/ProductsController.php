@@ -58,6 +58,15 @@ class ProductsController extends Controller
             ->with($status, $response['message']);
     }
 
+    public function delete(Product $product)
+    {
+        $response = ProductController::delete($product->id);
+        $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
+
+        return redirect(route('products.index'))
+            ->with($status, $response['message']);
+    }
+
     public function edit(Product $product)
     {
         $product_types = ProductType::all();
@@ -92,7 +101,8 @@ class ProductsController extends Controller
                 'products.name',
                 'products.code',
                 'product_types.type')
-            ->leftJoin('product_types', 'products.product_type_id', '=', 'product_types.id');
+            ->leftJoin('product_types', 'products.product_type_id', '=', 'product_types.id')
+            ->where('products.deleted_at', null);
 
         return DataTables::query($products)
             ->addColumn('action_column', function ($product) {
