@@ -40,7 +40,7 @@ class ProductSalesImport implements ToCollection, WithHeadingRow
 
                     /* Update inventory movement if product sale create success */
                     if ($response['status_code'] == Response::HTTP_OK) {
-                        $inventory = Inventory::where('branch_id', $branch->id)
+                        $inventory = Inventory::where('branch_id', Branch::$WAREHOUSE)
                             ->where('product_id', $product->id)->first();
                         $updated_quantity = $inventory->quantity - $quantity;
 
