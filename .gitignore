@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/generated_code
 /storage/*.key
 /vendor
 /.idea
@@ -11,3 +12,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.DS_STORE

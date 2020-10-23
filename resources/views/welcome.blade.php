@@ -1,100 +1,74 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.landing.app')
 
-        <title>Laravel</title>
+@section('styles')
+    <style>
+        /* DISABLE ARROWS ON INPUT TYPE NUMBER */
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+@endsection
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+@section('content')
+    <div class="main-content">
+        <div class="header bg-gradient-header py-7 py-lg-7 pt-lg-6 text-center">
+            <div class="container"></div>
+        </div>
+        <div class="container mt--8">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    @include('shared.flash_messages')
+                    <div class="card card-profile bg-gradient-white" style="margin-bottom: 10px;">
+                        <div class="card-body pl-5 pr-5">
+                            <h2 class="mb-0">
+                                Get updated to our new products by subscribing our newsletter!
+                            </h2>
+                            <p class="mb-3">
+                                Please enter your email and contact number to our list.
+                            </p>
+                            <form class="d-inline" method="POST" action="{{ route('subscribe') }}">
+                                @csrf
+                                <input type="email" class="form-control mb-2" id="email" name="email"
+                                       placeholder="juandelacruz@example.com" required>
+                                <input type="number" class="form-control input-number" id="contact_number" name="mobile"
+                                       placeholder="09260000000"  required>
+                                <button class="btn btn-default btn-block mt-3" type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+@endsection
+
+@section('scripts')
+    <script>
+        // disable input number steps via up/down arrow keys
+        var inputElements = document.getElementsByClassName('input-number');
+        for (var i = 0; i < inputElements.length; i++) {
+            inputElements[i].addEventListener('keydown', function (e) {
+                if (e.which === 38 || e.which === 40) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // function phonenumber(inputtxt) {
+        //     var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        //     if (inputtxt.value.match(phoneno)) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // }
+    </script>
+@endsection
