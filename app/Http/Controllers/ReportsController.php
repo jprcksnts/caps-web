@@ -92,16 +92,16 @@ class ReportsController extends Controller
 
             $transaction = collect();
             if ($inventory_movement->type == InventoryMovement::$order) {
-                $transaction = ProductOrder::find($inventory_movement->tx_id);
+                $transaction = ProductOrder::withTrashed()->find($inventory_movement->tx_id);
                 $inventory_movement->movement_type = 'Product Order';
             } else if ($inventory_movement->type == InventoryMovement::$sale) {
-                $transaction = ProductSale::find($inventory_movement->tx_id);
+                $transaction = ProductSale::withTrashed()->find($inventory_movement->tx_id);
                 $inventory_movement->movement_type = 'Product Sale';
             }
 
             if ($transaction->branch_id == $input['branch_id']) {
-                $product = Product::find($transaction->product_id);
-                $branch = Branch::find($transaction->branch_id);
+                $product = Product::withTrashed()->find($transaction->product_id);
+                $branch = Branch::withTrashed()->find($transaction->branch_id);
 
                 $inventory_movement->branch_name = $branch->name;
                 $inventory_movement->product_name = $product->name;

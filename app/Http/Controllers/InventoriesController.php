@@ -21,7 +21,8 @@ class InventoriesController extends Controller
                 'products.name as product_name',
                 'branches.name as branch_name')
             ->leftJoin('products', 'inventories.product_id', '=', 'products.id')
-            ->leftJoin('branches', 'inventories.branch_id', '=', 'branches.id');
+            ->leftJoin('branches', 'inventories.branch_id', '=', 'branches.id')
+            ->where('products.deleted_at', null);
 
         return DataTables::query($inventories)
             ->rawColumns(['action_column'])

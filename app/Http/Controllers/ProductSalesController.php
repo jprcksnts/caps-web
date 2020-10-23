@@ -66,6 +66,24 @@ class ProductSalesController extends Controller
             ->with($status, $response['message']);
     }
 
+    public function delete(ProductSale $product_sale)
+    {
+        $inventory = Inventory::where('branch_id', Branch::$WAREHOUSE)
+            ->where('product_id', $product_sale->product_id)->first();
+
+        /* Reverse Inventory Movement */
+        $updated_quantity = $inventory->quantity + $product_sale->quantity;
+
+        InventoryController::update($inventory->id, $updated_quantity);
+        InventoryMovementController::create($product_sale->id, InventoryMovement::$sale, $product_sale->quantity, $updated_quantity);
+
+        $response = ProductSaleController::delete($product_sale->id);
+        $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
+
+        return redirect(route('product_sales.index'))
+            ->with($status, $response['message']);
+    }
+
     public function show(ProductSale $product_sale)
     {
         return view('product_sales.show', compact('product_sale'));
@@ -102,7 +120,8 @@ class ProductSalesController extends Controller
                 'product_sales.quantity',
                 'product_sales.created_at')
             ->leftJoin('products', 'product_sales.product_id', '=', 'products.id')
-            ->leftJoin('branches', 'product_sales.branch_id', '=', 'branches.id');
+            ->leftJoin('branches', 'product_sales.branch_id', '=', 'branches.id')
+            ->where('product_sales.deleted_at', null);
 
         return DataTables::query($product_sales)
             ->addColumn('action_column', function ($product_sale) {

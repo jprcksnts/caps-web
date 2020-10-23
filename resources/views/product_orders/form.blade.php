@@ -38,27 +38,6 @@
                             <form method="post" action="{{ $form_action['route'] }}" role="form" id="form-data">
                                 @csrf
 
-                                <div class="form-group mb-2 d-none">
-                                    <label class="form-control-label" for="branch_id">Branch</label>
-                                    @if(count($branches) > 0)
-                                        <select class="form-control" id="branch_id" name="branch_id">
-                                            @foreach ($branches as $branch)
-                                                <option value="{{ $branch->id }}" id="{{ $branch->id }}"
-                                                        @if (isset($product_sale)) @if ($product_sale->branch_id == $branch->id)
-                                                        selected @endif @endif>
-                                                    {{ $branch->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    @else
-                                        <select class="form-control" id="branch_id" name="branch_id">
-                                            <option value="0" id="0" disabled>
-                                                No branches found.
-                                            </option>
-                                        </select>
-                                    @endif
-                                </div>
-
                                 <div class="form-group mb-2">
                                     <label class="form-control-label" for="product_uuid">Product</label>
                                     @if(count($products) > 0)

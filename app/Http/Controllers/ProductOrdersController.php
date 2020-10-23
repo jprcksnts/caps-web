@@ -26,19 +26,18 @@ class ProductOrdersController extends Controller
     public function create()
     {
         $products = Product::all();
-        $branches = Branch::all();
         $form_action = [
             'page_title' => 'Create New Product Order',
             'route' => route('product_orders.store'),
         ];
-        return view('product_orders.form', compact('form_action', 'products', 'branches'));
+        return view('product_orders.form', compact('form_action', 'products'));
     }
 
     public function store(Request $request)
     {
         $input = $request->all();
         $expected_arrival_date = date('Y-m-d', strtotime(str_replace('-', '/', $input['expected_arrival_date'])));
-        $response = ProductOrderController::create($input['product_id'], $input['branch_id'], $input['quantity'], $expected_arrival_date);
+        $response = ProductOrderController::create($input['product_id'], Branch::$WAREHOUSE, $input['quantity'], $expected_arrival_date);
         $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         /* Inventory Movement */
@@ -49,6 +48,24 @@ class ProductOrdersController extends Controller
 
         InventoryController::update($inventory->id, $updated_quantity);
         InventoryMovementController::create($response['data']['product_order']['id'], InventoryMovement::$order, $request['quantity'], $updated_quantity);
+
+        return redirect(route('product_orders.index'))
+            ->with($status, $response['message']);
+    }
+
+    public function delete(ProductOrder $product_order)
+    {
+        $inventory = Inventory::where('branch_id', $product_order->branch_id)
+            ->where('product_id', $product_order->product_id)->first();
+
+        /* Reverse Inventory Movement */
+        $updated_quantity = $inventory->quantity - $product_order->quantity;
+
+        InventoryController::update($inventory->id, $updated_quantity);
+        InventoryMovementController::create($product_order->id, InventoryMovement::$order, $product_order->quantity, $updated_quantity);
+
+        $response = ProductOrderController::delete($product_order->id);
+        $status = ($response['status_code'] == Response::HTTP_OK) ? 'success' : 'error';
 
         return redirect(route('product_orders.index'))
             ->with($status, $response['message']);
@@ -92,7 +109,8 @@ class ProductOrdersController extends Controller
                 'product_orders.quantity',
                 'product_orders.expected_arrival_date',
                 'product_orders.created_at')
-            ->leftJoin('products', 'product_orders.product_id', '=', 'products.id');
+            ->leftJoin('products', 'product_orders.product_id', '=', 'products.id')
+            ->where('product_orders.deleted_at', null);
 
         return DataTables::query($product_orders)
             ->addColumn('action_column', function ($product_order) {
